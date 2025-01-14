@@ -1,0 +1,54 @@
+SELECT 
+tbestruturacorporativa.descricao AS OM,
+tbusuario.idusuario AS Nº_ORDEM,
+Tbcategoria.descricao AS POSTO_GRADUACAO,
+tbusuario.nome AS NOME,
+Tbclassificacao.descricao AS CLASSIFICACAO
+
+FROM 
+(((tbusuario
+
+INNER JOIN TbEstruturaCorporativa
+ON (TbUsuario.idEstruturaCorporativa= tbEstruturaCorporativa.idEstruturaCorporativa))
+
+INNER JOIN Tbcategoria
+ON (TbUsuario.idcategoria= Tbcategoria.idcategoria))
+
+INNER JOIN Tbclassificacao
+ON (TbUsuario.idclassificacao= Tbclassificacao.idclassificacao))
+
+WHERE
+tbEstruturaCorporativa.descricao Like '%||::ORGANIZAÇÃO MILITAR::CodigoEmpresa::::STRING::30::R::||%' and
+Tbcategoria.descricao Like '%||::GRAU HIERÁRQUICO::CodigoEmpresa::::STRING::30::R::||%' and
+Tbclassificacao.descricao Like '%||::CLASSIFICAÇÃO Exemplo SSD, MILITAR::CodigoEmpresa::::STRING::30::R::||%' and
+
+tempermissaodeacesso = 'TRUE'
+
+ORDER BY 
+Tbcategoria.descricao,
+tbusuario.nome
+
+
+
+select tbusuario.nome,tbusuario.idusuario,tbestruturacorporativa.descricao,Tbcategoria.descricao AS POSTO_GRADUACAO,Tbclassificacao.descricao AS CLASSIFICACAO,tbusuario.tempermissaodeacesso 
+
+from (((tbusuario
+
+INNER JOIN TbEstruturaCorporativa
+ON (TbUsuario.idEstruturaCorporativa= tbEstruturaCorporativa.idEstruturaCorporativa))
+
+INNER JOIN Tbcategoria
+ON (TbUsuario.idcategoria= Tbcategoria.idcategoria))
+
+INNER JOIN Tbclassificacao
+ON (TbUsuario.idclassificacao= Tbclassificacao.idclassificacao))
+
+
+where tbEstruturaCorporativa.descricao Like '%||::Nome da OM desejada (vazio para ver tudo).::CodigoEmpresa::::STRING::30::R::||%' and
+Tbcategoria.descricao Like '%||::Nome da Categoria desejada (vazio para ver tudo).::CodigoEmpresa::::STRING::30::R::||%' and
+Tbclassificacao.descricao Like '%||::Nome da Classificacao desejada (vazio para ver tudo).::CodigoEmpresa::::STRING::30::R::||%' and
+
+
+tempermissaodeacesso = 'false'
+
+ORDER BY tbusuario.nome
